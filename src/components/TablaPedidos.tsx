@@ -10,6 +10,8 @@ import {
   Button,
   Box,
   IconButton,
+  Autocomplete,
+  TextField,
 } from "@mui/material";
 import { Pedido } from "../types";
 import { formatearCOP, formatearCOPStr } from "../utils/currency";
@@ -24,6 +26,7 @@ const TablaPedidos: React.FC = () => {
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
   const [selectedPedido, setSelectedPedido] = useState<Pedido | null>(null);
   const [openModal, setOpenModal] = useState(false);
+  const [filtroGuia, setFiltroGuia] = useState<string | null>(null); // Estado para el filtro de guía
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -60,7 +63,7 @@ const TablaPedidos: React.FC = () => {
   };
 
   const handleCopyClick = (guia: string, event: React.MouseEvent) => {
-    event.stopPropagation()
+    event.stopPropagation();
     navigator.clipboard.writeText(guia).then(
       () => {
         console.log(`Copied: ${guia}`);
@@ -82,6 +85,14 @@ const TablaPedidos: React.FC = () => {
     window.location.reload();
   };
 
+  const pedidosFiltrados = filtroGuia
+    ? pedidos.filter((pedido) => pedido.guia === filtroGuia)
+    : pedidos;
+
+  const handleClear = () => {
+    setFiltroGuia(null);
+  };
+
   return (
     <>
       <Box display="flex" justifyContent="flex-end" mb={2} mt={2}>
@@ -98,6 +109,37 @@ const TablaPedidos: React.FC = () => {
         </Button>
       </Box>
 
+      <Box display="flex" justifyContent="flex-start" mb={2} mx={5}>
+        <Autocomplete
+          options={pedidos.map((pedido) => pedido.guia)}
+          value={filtroGuia}
+          onChange={(event, newValue) => setFiltroGuia(newValue)}
+          sx={{ width: 300 }}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Buscar por guía"
+              variant="outlined"
+              fullWidth
+            />
+          )}
+          PaperComponent={(props) => (
+            <Paper
+              {...props}
+              sx={{ padding: "8px" }} // Ajusta el padding según lo necesites
+            />
+          )}
+        />
+        <Button
+          variant="outlined"
+          disabled={!filtroGuia}
+          onClick={handleClear}
+          sx={{ marginLeft: 2 }} // Añadir espacio entre el botón y el Autocomplete
+        >
+          Limpiar
+        </Button>
+      </Box>
+
       <Box mx={5} my={5}>
         <TableContainer component={Paper}>
           <Table size="small">
@@ -108,7 +150,6 @@ const TablaPedidos: React.FC = () => {
                 <TableCell>Status</TableCell>
                 <TableCell>Repartidora</TableCell>
                 <TableCell>Cliente</TableCell>
-
                 <TableCell>Celular</TableCell>
                 {admin && (
                   <>
@@ -121,7 +162,7 @@ const TablaPedidos: React.FC = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {pedidos.map((pedido, index) => (
+              {pedidosFiltrados.map((pedido, index) => (
                 <TableRow
                   key={pedido.id}
                   hover

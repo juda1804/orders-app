@@ -10,7 +10,7 @@ export const EstadosConfig: EstadoConfig[] = [
     },
     {
       nombre: "En reparto",
-      alias: ["EN RUTA", "CAMINO", "EN REPARTO"],
+      alias: ["EN RUTA", "CAMINO", "EN REPARTO", "INTENTO DE ENTREGA"],
       colorFondo: "#F44336",
       posicion: 2,
     },
@@ -29,6 +29,7 @@ export const EstadosConfig: EstadoConfig[] = [
     },
   
     { nombre: "OTROS", alias: [], colorFondo: "#808080", posicion: 5 },
+    { nombre: "Devoluciones", alias: ["DEVOLUCION"], colorFondo: "#808080", posicion: 5 },
     {
       nombre: "Entregado",
       alias: ["ENTREGADO"],
@@ -43,3 +44,4 @@ export const EstadosConfig: EstadoConfig[] = [
     },
     // Agrega más estados y alias según sea necesario
   ];
+  
