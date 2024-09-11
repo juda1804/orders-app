@@ -9,6 +9,7 @@ export interface Pedido {
     nombreCliente: string;
     celular: string;
     valorTotal: string;
+    costoProductos: string;
     observacion: string[];
     fechaOrden: string;
     hora: string;

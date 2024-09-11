@@ -2,6 +2,7 @@ import { Card, CardContent, Typography } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Pedido } from "../types";
+import EstadisticasPedidos from "./EstadisticasPedidos";
 import EstadoPedidos from "./estados-pedido/EstadoPedidos";
 import RepartidorasPedidos from "./RepartidorasPedidos";
 
@@ -17,6 +18,15 @@ const ResumenPedidos: React.FC = () => {
 
   return (
     <>
+      <Card sx={{ maxWidth: 1200, margin: "20px auto", padding: 2 }}>
+        <CardContent>
+          <Typography variant="h5" gutterBottom>
+            Estadisticas
+          </Typography>
+          <EstadisticasPedidos pedidos={pedidos} />
+        </CardContent>
+      </Card>
+
       <Card sx={{ maxWidth: 1200, margin: "20px auto", padding: 2 }}>
         <CardContent>
           <Typography variant="h5" gutterBottom>

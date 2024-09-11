@@ -14,6 +14,7 @@ const EstadoPedidos: React.FC<EstadoPedidosProps> = ({ pedidos }) => {
   const navigate = useNavigate();
   const [openModal, setOpenModal] = useState(false);
   const [estadosOtros, setEstadosOtros] = useState<string[]>([]);
+
   // Mapeamos los estados y sus alias a un solo grupo
   const estadoMap = EstadosConfig.reduce((acc, { nombre, alias }) => {
     acc[nombre] = nombre; // Mapea el nombre original
