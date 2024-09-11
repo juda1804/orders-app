@@ -7,7 +7,7 @@ const Header: React.FC = () => {
     <AppBar position="static">
       <Toolbar>
         <Typography variant="h6" sx={{ flexGrow: 1 }}>
-          Pedidos App
+          Mis Ordenes Dropshipping
         </Typography>
         <Button color="inherit" component={Link} to="/">Resumen estado Pedidos</Button>
         <Button color="inherit" component={Link} to="/pedidos">Tabla de Pedidos</Button>
