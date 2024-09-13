@@ -27,6 +27,7 @@ const TablaPedidos: React.FC = () => {
   const [selectedPedido, setSelectedPedido] = useState<Pedido | null>(null);
   const [openModal, setOpenModal] = useState(false);
   const [filtroGuia, setFiltroGuia] = useState<string | null>(null); // Estado para el filtro de guía
+  const [filtroCliente, setFiltroCliente] = useState<string>('');
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -85,12 +86,14 @@ const TablaPedidos: React.FC = () => {
     window.location.reload();
   };
 
-  const pedidosFiltrados = filtroGuia
-    ? pedidos.filter((pedido) => pedido.guia === filtroGuia)
-    : pedidos;
+  const pedidosFiltrados = pedidos.filter((pedido) => 
+    (filtroGuia ? pedido.guia === filtroGuia : true) &&
+    pedido.nombreCliente.toLowerCase().includes(filtroCliente.toLowerCase())
+  );
 
   const handleClear = () => {
     setFiltroGuia(null);
+    setFiltroCliente('');
   };
 
   return (
@@ -130,9 +133,16 @@ const TablaPedidos: React.FC = () => {
             />
           )}
         />
+        <TextField
+          value={filtroCliente}
+          onChange={(e) => setFiltroCliente(e.target.value)}
+          label="Buscar por nombre de cliente"
+          variant="outlined"
+          sx={{ width: 300, marginLeft: 2 }}
+        />
         <Button
           variant="outlined"
-          disabled={!filtroGuia}
+          disabled={!filtroGuia && !filtroCliente}
           onClick={handleClear}
           sx={{ marginLeft: 2 }} // Añadir espacio entre el botón y el Autocomplete
         >

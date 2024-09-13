@@ -5,14 +5,14 @@ import { Pedido } from "../types";
 import EstadisticasPedidos from "./EstadisticasPedidos";
 import EstadoPedidos from "./estados-pedido/EstadoPedidos";
 import RepartidorasPedidos from "./RepartidorasPedidos";
+import { getPedidos } from "../service/PedidoService";
 
 const ResumenPedidos: React.FC = () => {
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
 
   useEffect(() => {
-    axios
-      .get<Pedido[]>("http://localhost:8080/order")
-      .then((response) => setPedidos(response.data))
+    getPedidos("order")
+      .then((data) => setPedidos(data))
       .catch((error) => console.error("Error al obtener los pedidos:", error));
   }, []);
 

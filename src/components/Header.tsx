@@ -2,7 +2,11 @@ import React from 'react';
 import { AppBar, Toolbar, Typography, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-const Header: React.FC = () => {
+interface HeaderProps {
+  onLogout: () => void;
+}
+
+const Header: React.FC<HeaderProps> = ({ onLogout }) => {
   return (
     <AppBar position="static">
       <Toolbar>
@@ -12,6 +16,8 @@ const Header: React.FC = () => {
         <Button color="inherit" component={Link} to="/">Resumen estado Pedidos</Button>
         <Button color="inherit" component={Link} to="/pedidos">Tabla de Pedidos</Button>
         <Button color="inherit" component={Link} to="/detalles">Detalles</Button>
+        <Button color="inherit" component={Link} to="/carga-orden">Cargar Orden</Button>
+        <Button color="inherit" onClick={onLogout}>Cerrar sesión</Button>
       </Toolbar>
     </AppBar>
   );
