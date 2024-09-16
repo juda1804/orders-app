@@ -15,7 +15,6 @@ const Header: React.FC<HeaderProps> = ({ onLogout }) => {
         </Typography>
         <Button color="inherit" component={Link} to="/">Resumen estado Pedidos</Button>
         <Button color="inherit" component={Link} to="/pedidos">Tabla de Pedidos</Button>
-        <Button color="inherit" component={Link} to="/detalles">Detalles</Button>
         <Button color="inherit" component={Link} to="/carga-orden">Cargar Orden</Button>
         <Button color="inherit" onClick={onLogout}>Cerrar sesión</Button>
       </Toolbar>

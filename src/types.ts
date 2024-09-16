@@ -4,7 +4,7 @@ export interface Pedido {
     orderId: string;
     guia: string;
     status: string;
-    statusManual: string | null;
+    statusManual: string;
     repartidora: string;
     nombreCliente: string;
     celular: string;

@@ -12,15 +12,17 @@ import {
   IconButton,
   Autocomplete,
   TextField,
+  Tooltip,
 } from "@mui/material";
 import { Pedido } from "../types";
 import { formatearCOP, formatearCOPStr } from "../utils/currency";
 import { useLocation, useNavigate } from "react-router-dom";
 import { formatearFechaHora } from "../utils/custom-date";
-import { ContentCopy } from "@mui/icons-material";
-import PedidoDialog from "./PedidosDialog";
+import { ContentCopy, Search } from "@mui/icons-material";
+import PedidoDialog from "./modal-pedidos/PedidosDialog";
 import StatusChip from "./estados-pedido/StatusChip";
 import { getPedidos } from "../service/PedidoService";
+import BuscarGuiaDialog from "./BuscarGuiaDialog";
 
 const TablaPedidos: React.FC = () => {
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
@@ -83,7 +85,6 @@ const TablaPedidos: React.FC = () => {
   const handleCloseModal = () => {
     setOpenModal(false);
     setSelectedPedido(null);
-    window.location.reload();
   };
 
   const pedidosFiltrados = pedidos.filter((pedido) => 
@@ -94,6 +95,27 @@ const TablaPedidos: React.FC = () => {
   const handleClear = () => {
     setFiltroGuia(null);
     setFiltroCliente('');
+  };
+
+  const handleSelectedPedidoUpdated = (updatedPedido: Pedido) => {
+    setPedidos(pedidos.map((pedido) =>
+      pedido.id === updatedPedido.id ? updatedPedido : pedido
+    ));
+    setSelectedPedido(updatedPedido);
+  };
+
+  const [openBuscarGuiaModal, setOpenBuscarGuiaModal] = useState(false);
+  const [selectedGuia, setSelectedGuia] = useState("");
+
+  const handleBuscarGuiaClick = (guia: string, event: React.MouseEvent) => {
+    event.stopPropagation();
+    setSelectedGuia(guia);
+    setOpenBuscarGuiaModal(true);
+  };
+
+  const handleCloseBuscarGuiaModal = () => {
+    setOpenBuscarGuiaModal(false);
+    setSelectedGuia("");
   };
 
   return (
@@ -214,7 +236,17 @@ const TablaPedidos: React.FC = () => {
                       </TableCell>
                     </>
                   )}
-                  <TableCell></TableCell>
+                  <TableCell>
+                    <Tooltip title="Buscar información de la guía">
+                      <IconButton
+                        size="small"
+                        onClick={(e) => handleBuscarGuiaClick(pedido.guia, e)}
+                        aria-label="buscar guía"
+                      >
+                        <Search fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -226,8 +258,14 @@ const TablaPedidos: React.FC = () => {
           open={openModal}
           onClose={handleCloseModal}
           pedido={selectedPedido}
+          setSelectedPedido={handleSelectedPedidoUpdated}
         />
       )}
+      <BuscarGuiaDialog
+        open={openBuscarGuiaModal}
+        onClose={handleCloseBuscarGuiaModal}
+        guia={selectedGuia}
+      />
     </>
   );
 };

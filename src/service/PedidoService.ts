@@ -34,6 +34,7 @@ export const getPedido = async (guia: string): Promise<Pedido> => {
   }
 };
 
+/**
 export const updatePedido = async (pedido: Pedido): Promise<Pedido> => {
   try {
     const response = await axios.post<Pedido>(
@@ -47,20 +48,24 @@ export const updatePedido = async (pedido: Pedido): Promise<Pedido> => {
     throw new Error("No se pudo actualizar el pedido. Por favor, inténtalo de nuevo más tarde.");
   }
 };
+*/
 
-export const addObservacion = async (
+export const updatePedido = async (
   guia: string,
-  observacion: string,
+  pedido: Pedido,
+  setSelectedPedido: (pedido: Pedido) => void,
   onClose: () => void
 ) => {
   const updatedPedido = {
-    observacion: observacion,
+    observacion: pedido.observacion.at(-1),
+    statusManual: pedido.statusManual
   };
 
   axios
     .post(`${BASE_URL}/order/${guia}`, updatedPedido, getHeaders())
     .then((response) => {
       console.log("Pedido actualizado:", response.data);
+      setSelectedPedido(response.data);
       onClose();
     })
     .catch((error) => {

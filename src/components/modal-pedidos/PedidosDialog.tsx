@@ -12,32 +12,53 @@ import {
     TextField,
   Alert,
   Snackbar,
+  MenuItem,
+  Select,
+  SelectChangeEvent
 } from "@mui/material";
-import { Pedido } from "../types";
-import StatusChip from "./estados-pedido/StatusChip";
-import { addObservacion } from "../service/PedidoService";
+import { Pedido } from "../../types";
+import StatusChip from "../estados-pedido/StatusChip";
+import { updatePedido } from "../../service/PedidoService";
+import "./PedidoDialog.css";
 
 interface PedidoDialogProps {
   open: boolean;
   onClose: () => void;
-  pedido: Pedido | null;
+  pedido: Pedido;
+  setSelectedPedido: (pedido: Pedido) => void;
 }
 
 const PedidoDialog: React.FC<PedidoDialogProps> = ({
   open,
   onClose,
   pedido,
+  setSelectedPedido,
 }) => {
   const [newObservation, setNewObservation] = useState("");
   const [alertOpen, setAlertOpen] = useState(!pedido?.guia);
+  const [status, setStatus] = useState(pedido?.statusManual || "");
 
   const handleSave = () => {
     if (!pedido) return;
-    addObservacion(pedido.guia, newObservation, onClose);
+    const handleUpdatePedido = (updatedPedido: Pedido) => {
+      setSelectedPedido(updatedPedido as Pedido);
+    }
+
+    const newPedido = {
+      ...pedido,
+      observacion: [...pedido.observacion, newObservation],
+      statusManual: status, // Usamos el nuevo estado seleccionado
+    }
+
+    updatePedido(pedido.guia, newPedido, handleUpdatePedido, onClose);
   };
 
   const handleAlertClose = () => {
     setAlertOpen(false);
+  };
+
+  const handleStatusChange = (event: SelectChangeEvent) => {
+    setStatus(event.target.value);
   };
 
   return (
@@ -58,10 +79,28 @@ const PedidoDialog: React.FC<PedidoDialogProps> = ({
                   <Typography variant="subtitle2" color="textSecondary">
                     Status:
                   </Typography>
-                  <Typography variant="body1">
+                  <Box>
                     <StatusChip status={pedido.status} />
-                  </Typography>
+                  </Box>
                 </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="subtitle2" color="textSecondary">
+                    Status Gestion:
+                  </Typography>
+                  <Select
+                    value={status}
+                    onChange={handleStatusChange}
+                    fullWidth
+                    size="small"
+                    className="status-select"
+                  >
+                    <MenuItem value=""></MenuItem>
+                    <MenuItem value="ENTREGADO">Entregado</MenuItem>
+                    <MenuItem value="EN PROCESAMIENTO">En Procesamiento</MenuItem>
+                    <MenuItem value="DEVOLUCION">Devolucion</MenuItem>                    
+                  </Select>
+                </Grid>
+                <Grid item xs={12} sm={6}/>
                 <Grid item xs={12} sm={6}>
                   <Typography variant="subtitle2" color="textSecondary">
                     Cliente:
