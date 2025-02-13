@@ -17,7 +17,7 @@ import {
 import { Pedido } from "../types";
 import { formatearCOP, formatearCOPStr } from "../utils/currency";
 import { useLocation, useNavigate } from "react-router-dom";
-import { formatearFechaHora } from "../utils/custom-date";
+import { formatearFecha } from "../utils/custom-date";
 import { ContentCopy, Search } from "@mui/icons-material";
 import PedidoDialog from "./modal-pedidos/PedidosDialog";
 import StatusChip from "./estados-pedido/StatusChip";
@@ -177,7 +177,7 @@ const TablaPedidos: React.FC = () => {
           <Table size="small">
             <TableHead>
               <TableRow>
-                <TableCell>Fecha y Hora</TableCell>
+                <TableCell>Fecha</TableCell>
                 <TableCell>Guia</TableCell>
                 <TableCell>Status</TableCell>
                 <TableCell>Repartidora</TableCell>
@@ -201,7 +201,7 @@ const TablaPedidos: React.FC = () => {
                   sx={{ cursor: "pointer" }}
                   onClick={() => handleRowClick(pedido)}>
                   <TableCell width={"150rem"}>
-                    {formatearFechaHora(pedido.fechaOrden, pedido.hora)}
+                    {formatearFecha(pedido.fechaOrden)}
                   </TableCell>
                   <TableCell width={"170rem"}>
                     {pedido.guia}

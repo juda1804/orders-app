@@ -12,7 +12,6 @@ export interface Pedido {
     costoProductos: string;
     observacion: string[];
     fechaOrden: string;
-    hora: string;
     costoFlete: string;
   }
   

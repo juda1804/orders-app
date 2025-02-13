@@ -1,4 +1,4 @@
-import { EstadoConfig } from "../../types";
+import { EstadoConfig } from "./types";
 
 export const EstadosConfig: EstadoConfig[] = [
     {
@@ -10,7 +10,7 @@ export const EstadosConfig: EstadoConfig[] = [
     },
     {
       nombre: "En reparto",
-      alias: ["EN RUTA", "CAMINO", "EN REPARTO", "INTENTO DE ENTREGA"],
+      alias: ["EN RUTA", "CAMINO", "EN REPARTO", "INTENTO DE ENTREGA", "En proceso de entrega"],
       colorFondo: "#F44336",
       posicion: 2,
     },
@@ -23,7 +23,14 @@ export const EstadosConfig: EstadoConfig[] = [
   
     {
       nombre: "En Procesamiento",
-      alias: ["EN PROCESAMIENTO"],
+      alias: ["EN PROCESAMIENTO", "Generada"],
+      colorFondo: "#03A9F4",
+      posicion: 3,
+    },
+
+    {
+      nombre: "Novedades",
+      alias: ["NOVEDAD", "Novedad"],
       colorFondo: "#03A9F4",
       posicion: 3,
     },
@@ -32,7 +39,7 @@ export const EstadosConfig: EstadoConfig[] = [
     { nombre: "Devoluciones", alias: ["DEVOLUCION"], colorFondo: "#808080", posicion: 5 },
     {
       nombre: "Entregado",
-      alias: ["ENTREGADO"],
+      alias: ["ENTREGADO", "Entregada a destino"],
       colorFondo: "#4CAF50",
       posicion: 6,
     },

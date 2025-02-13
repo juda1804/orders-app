@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Grid, Typography, Box } from "@mui/material";
 import { Pedido } from "../../types";
 import EstadosOtrosModal from "./EstadosOtrosModal";
-import { EstadosConfig } from "./EstadosConfig";
+import { EstadosConfig } from "../../EstadosConfig";
 
 interface EstadoPedidosProps {
   pedidos: Pedido[];

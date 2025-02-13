@@ -1,4 +1,4 @@
-import { EstadosConfig } from "../components/estados-pedido/EstadosConfig";
+import { EstadosConfig } from "../EstadosConfig";
 
 export const getStatusBgColor = (status: string): string => {
     const estadoConfig = EstadosConfig.find((config) => config.nombre === status || config.alias.includes(status));
