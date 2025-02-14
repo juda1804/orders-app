@@ -49,6 +49,4 @@ export const EstadosConfig: EstadoConfig[] = [
       colorFondo: "#F44336",
       posicion: 8,
     },
-    // Agrega más estados y alias según sea necesario
-  ];
-  
+];

@@ -22,3 +22,10 @@ export interface Pedido {
     posicion: number;
     font?: string;
   }
+
+  export interface Metadata {
+    id: number;
+    name: string;
+    rawMessage: string;
+    description: string;
+  }

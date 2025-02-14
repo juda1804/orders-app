@@ -2,21 +2,22 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { Grid, Typography, Box } from "@mui/material";
-import { Pedido } from "../../types";
+import { EstadoConfig, Pedido } from "../../types";
 import EstadosOtrosModal from "./EstadosOtrosModal";
 import { EstadosConfig } from "../../EstadosConfig";
 
 interface EstadoPedidosProps {
   pedidos: Pedido[];
+  estadosConfig: EstadoConfig[];
 }
 
-const EstadoPedidos: React.FC<EstadoPedidosProps> = ({ pedidos }) => {
+const EstadoPedidos: React.FC<EstadoPedidosProps> = ({ pedidos, estadosConfig }) => {
   const navigate = useNavigate();
   const [openModal, setOpenModal] = useState(false);
   const [estadosOtros, setEstadosOtros] = useState<string[]>([]);
 
   // Mapeamos los estados y sus alias a un solo grupo
-  const estadoMap = EstadosConfig.reduce((acc, { nombre, alias }) => {
+  const estadoMap = estadosConfig.reduce((acc, { nombre, alias }) => {
     acc[nombre] = nombre; // Mapea el nombre original
     alias.forEach((a) => {
       acc[a] = nombre; // Mapea cada alias al nombre del grupo

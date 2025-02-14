@@ -6,6 +6,7 @@ import Header from './components/Header';
 import ResumenPedidos from './components/ResumenPedidos';
 import FileUploadComponent from './components/carga-ordenes/FileUploadComponent';
 import Login from './components/security/Login';
+import { EstadosConfigPanel } from './components/EstadosConfigPanel';
 
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -40,6 +41,11 @@ const App: React.FC = () => {
         <Route path="/" element={
           <ProtectedRoute>
             <ResumenPedidos />
+          </ProtectedRoute>
+        } />
+        <Route path="/configuracion" element={
+          <ProtectedRoute>
+            <EstadosConfigPanel />
           </ProtectedRoute>
         } />
         {/* Se eliminó la ruta de /detalles */}
